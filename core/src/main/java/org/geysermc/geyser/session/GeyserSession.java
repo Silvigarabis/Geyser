@@ -971,7 +971,11 @@ public class GeyserSession implements GeyserConnection, CommandSender {
                 }
 
                 // Download and load the language for the player
-                MinecraftLocale.downloadAndLoadLocale(locale);
+                try {
+                    MinecraftLocale.downloadAndLoadLocale(locale);
+                } catch(AssertionError e){
+                    //nothing 
+                }
             }
 
             @Override
