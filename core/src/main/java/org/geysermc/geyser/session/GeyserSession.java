@@ -392,7 +392,7 @@ public class GeyserSession implements GeyserConnection, CommandSender {
      * Whether to work around 1.13's different behavior in villager trading menus.
      */
     @Setter
-    private boolean emulatePost1_14Logic = true;
+    private boolean emulatePost1_13Logic = true;
     /**
      * Starting in 1.17, Java servers expect the <code>carriedItem</code> parameter of the serverbound click container
      * packet to be the current contents of the mouse after the transaction has been done. 1.16 expects the clicked slot
@@ -1673,6 +1673,8 @@ public class GeyserSession implements GeyserConnection, CommandSender {
             // Default stuff we have to fill in
             abilities.add(Ability.BUILD);
             abilities.add(Ability.MINE);
+            // Needed so you can drop items
+            abilities.add(Ability.DOORS_AND_SWITCHES);
             if (gameMode == GameMode.CREATIVE) {
                 // Needed so the client doesn't attempt to take away items
                 abilities.add(Ability.INSTABUILD);
@@ -1694,7 +1696,8 @@ public class GeyserSession implements GeyserConnection, CommandSender {
 
             abilityLayer.setLayerType(AbilityLayer.Type.BASE);
             abilityLayer.setFlySpeed(flySpeed);
-            abilityLayer.setWalkSpeed(walkSpeed);
+            // https://github.com/GeyserMC/Geyser/issues/3139 as of 1.19.10
+            abilityLayer.setWalkSpeed(walkSpeed == 0f ? 0.01f : walkSpeed);
             Collections.addAll(abilityLayer.getAbilitiesSet(), USED_ABILITIES);
 
             updateAbilitiesPacket.getAbilityLayers().add(abilityLayer);
