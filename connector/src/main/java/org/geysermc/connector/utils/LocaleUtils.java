@@ -41,6 +41,10 @@ import java.util.zip.ZipFile;
 
 public class LocaleUtils {
 
+    private static final String MINECRAFT_RESOURCE_BASE_URL = "https://bmclapi2.bangbang93.com/assets/";
+    
+    private static final String MINECRAFT_VERSION_META_LINK = "https://bmclapi2.bangbang93.com/mc/game/version_manifest.json";
+    
     public static final Map<String, Map<String, String>> LOCALE_MAPPINGS = new HashMap<>();
 
     private static final Map<String, Asset> ASSET_MAP = new HashMap<>();
@@ -64,7 +68,7 @@ public class LocaleUtils {
         return CompletableFuture.supplyAsync(() -> {
             try {
                 // Get the version manifest from Mojang
-                VersionManifest versionManifest = GeyserConnector.JSON_MAPPER.readValue(WebUtils.getBody("https://launchermeta.mojang.com/mc/game/version_manifest.json"), VersionManifest.class);
+                VersionManifest versionManifest = GeyserConnector.JSON_MAPPER.readValue(WebUtils.getBody(MINECRAFT_VERSION_META_LINK), VersionManifest.class);
 
                 // Get the url for the latest version of the games manifest
                 String latestInfoURL = "";
@@ -186,7 +190,7 @@ public class LocaleUtils {
         try {
             // Get the hash and download the locale
             String hash = ASSET_MAP.get("minecraft/lang/" + locale + ".json").getHash();
-            WebUtils.downloadFile("https://resources.download.minecraft.net/" + hash.substring(0, 2) + "/" + hash, localeFile.toString());
+            WebUtils.downloadFile(MINECRAFT_RESOURCE_BASE_URL + hash.substring(0, 2) + "/" + hash, localeFile.toString());
         } catch (Exception e) {
             GeyserConnector.getInstance().getLogger().error("Unable to download locale file hash", e);
         }
