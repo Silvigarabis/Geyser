@@ -90,6 +90,7 @@ public class GeyserSpigotPlugin extends JavaPlugin implements GeyserBootstrap {
 
     @Override
     public void onEnable() {
+        this.getLogger().warning("注意，此版本经过修改");
         GeyserLocale.init(this);
 
         // This is manually done instead of using Bukkit methods to save the config because otherwise comments get removed
