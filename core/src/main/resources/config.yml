@@ -71,7 +71,7 @@ floodgate-key-file: key.pem
 # This saves a token that can be reused to authenticate the player later. This does not save emails or passwords,
 # but you should still be cautious when adding to this list and giving others access to this Geyser instance's files.
 # Removing a name from this list will delete its cached login information on the next Geyser startup.
-# The file for this is in the same folder as this config, named "saved-refresh-tokens.json".
+# The file that tokens will be saved in is in the same folder as this config, named "saved-refresh-tokens.json".
 saved-user-logins:
   - ThisExampleUsernameShouldBeLongEnoughToNeverBeAnXboxUsername
   - ThisOtherExampleUsernameShouldAlsoBeLongEnough
@@ -174,6 +174,14 @@ force-resource-packs: true
 # Allows Xbox achievements to be unlocked.
 # THIS DISABLES ALL COMMANDS FROM SUCCESSFULLY RUNNING FOR BEDROCK IN-GAME, as otherwise Bedrock thinks you are cheating.
 xbox-achievements-enabled: false
+
+# Whether player IP addresses will be logged by the server.
+log-player-ip-addresses: true
+
+# Whether to alert the console and operators that a new Geyser version is available that supports a Bedrock version
+# that this Geyser version does not support. It's recommended to keep this option enabled, as many Bedrock platforms
+# auto-update.
+notify-on-new-bedrock-update: true
 
 # bStats is a stat tracker that is entirely anonymous and tracks only basic information
 # about Geyser, such as how many people are online, how many servers are using Geyser,
