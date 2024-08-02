@@ -132,6 +132,8 @@ public class UpstreamPacketHandler extends LoggingPacketHandler {
         }
 
         session.getUpstream().getSession().setCodec(packetCodec);
+        // FIXME temporary until 1.20.80 is dropped
+        session.getPlayerEntity().resetAir();
         return true;
     }
 
@@ -272,10 +274,10 @@ public class UpstreamPacketHandler extends LoggingPacketHandler {
 
     private boolean couldLoginUserByName(String bedrockUsername) {
         if (geyser.getConfig().getSavedUserLogins().contains(bedrockUsername)) {
-            String refreshToken = geyser.refreshTokenFor(bedrockUsername);
-            if (refreshToken != null) {
+            String authChain = geyser.authChainFor(bedrockUsername);
+            if (authChain != null) {
                 geyser.getLogger().info(GeyserLocale.getLocaleStringLog("geyser.auth.stored_credentials", session.getAuthData().name()));
-                session.authenticateWithRefreshToken(refreshToken);
+                session.authenticateWithAuthChain(authChain);
                 return true;
             }
         }
